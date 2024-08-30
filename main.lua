@@ -1,13 +1,18 @@
 
-function calc_propeller_output(propellers, pitch, yaw, roll)
+function calc_propeller_output(propellers, pitch, yaw, roll, default_idle, correction_factor)
     local outputs = {}
 
+    -- Use default_idle parameter or default to 50% if not provided
+    default_idle = default_idle or 0.5
+    -- Use correction_factor parameter or default to 0.5 if not provided
+    correction_factor = correction_factor or 0.5
+
     for i, prop in ipairs(propellers) do
-        -- Start with a default output of 50%
-        local output = 0.5
+        -- Start with the specified default idle output
+        local output = default_idle
         
         -- Adjust the output based on the propeller's coordinates and the quadcopter's pitch, yaw, and roll
-        output = output - (pitch * prop.coords.y * 0.5) - (roll * prop.coords.x * 0.5) - (yaw * prop.coords.z * 0.5)
+        output = output - (pitch * prop.coords.y * correction_factor) - (roll * prop.coords.x * correction_factor) - (yaw * prop.coords.z * correction_factor)
         
         -- Clamp the output between 0 and 1
         output = math.max(0, math.min(output, 1))
@@ -18,6 +23,7 @@ function calc_propeller_output(propellers, pitch, yaw, roll)
 
     return outputs
 end
+
 
 
 function visualize_propellers(propellers, outputs)
