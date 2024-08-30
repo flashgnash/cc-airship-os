@@ -87,11 +87,26 @@ local propellers = {
 
 
 local test_cases = {
-    {pitch = 0.1, yaw = 0.05, roll = -0.1},
-    {pitch = 0.2, yaw = -0.1, roll = 0.0},
-    {pitch = -0.1, yaw = 0.1, roll = 0.2},
-    {pitch = 0.0, yaw = 0.0, roll = 0.0},   -- perfectly level
-    {pitch = -0.05, yaw = 0.15, roll = -0.1}
+    {
+        coords = {x = 1342, y = 120, z = 2341},
+        orientation = {pitch = 0.1, yaw = 0.05, roll = -0.1}
+    },
+    {
+        coords = {x = 4799, y = 150, z = 3890},
+        orientation = {pitch = 0.2, yaw = -0.1, roll = 0.0}
+    },
+    {
+        coords = {x = 2914, y = 75, z = 1500},
+        orientation = {pitch = -0.1, yaw = 0.1, roll = 0.2}
+    },
+    {
+        coords = {x = 3567, y = 50, z = 2900},
+        orientation = {pitch = 0.0, yaw = 0.0, roll = 0.0}   -- perfectly level
+    },
+    {
+        coords = {x = 4231, y = 120, z = 4320},
+        orientation = {pitch = -0.05, yaw = 0.15, roll = -0.1}
+    }
 }
 
 
@@ -99,8 +114,8 @@ local i = 0
 -- Run the simulations
 for _, test in ipairs(test_cases) do
     i = i + 1
-    print("----\nTest case "..i.."\npitch: "..test.pitch.."\nyaw: "..test.yaw.."\nroll: "..test.roll)
-    local outputs = calc_propeller_output(propellers, test.pitch, test.yaw, test.roll)
+    print("----\nTest case "..i.."\npos: "..test.coords.x..","..test.coords.y..","..test.coords.z.."\npitch: "..test.orientation.pitch.."\nyaw: "..test.orientation.yaw.."\nroll: "..test.orientation.roll)
+    local outputs = calc_propeller_output(propellers, test.orientation.pitch, test.orientation.yaw, test.orientation.roll)
     
     visualize_propellers(propellers,outputs)
 
